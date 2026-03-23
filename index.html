@@ -666,6 +666,12 @@ body {
 .service-icon.purple { background: rgba(168, 85, 247, 0.1);  color: #9333ea; }
 .service-icon.rose   { background: rgba(244, 63, 94, 0.1);   color: #e11d48; }
 .service-icon.teal   { background: rgba(20, 184, 166, 0.1);  color: #0d9488; }
+.service-icon.gold   { background: rgba(180, 83, 9, 0.1);    color: #b45309; }
+
+/* Center a lone card when it's the only one in its row */
+.service-card:last-child:nth-child(3n + 1) {
+  grid-column: 2;
+}
 
 .service-card h3 {
   font-size: 1.25rem;
@@ -1506,7 +1512,7 @@ body {
   <div class="section-container">
     <div class="section-label">Our Services</div>
     <h2 class="section-title">Insurance Coverage<br>Tailored to You</h2>
-    <p class="section-subtitle">We offer comprehensive insurance solutions to protect every aspect of your life and business.</p>
+    <p class="section-subtitle">We offer comprehensive insurance solutions and certified mobile notary services to protect every aspect of your life and business.</p>
     <div class="services-grid">
       <div class="service-card">
         <div class="service-icon blue"><i class="fa-solid fa-house"></i></div>
@@ -1543,6 +1549,12 @@ body {
         <h3>Umbrella Policies</h3>
         <p>Extra liability protection above and beyond your standard policies — for the peace of mind you deserve.</p>
         <a href="#contact" class="service-link">Get a Quote →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon gold"><i class="fa-solid fa-file-signature"></i></div>
+        <h3>Mobile Notary Services</h3>
+        <p>We come to you. Our certified notary public travels to your home, office, or hospital to notarize documents quickly and conveniently — in English and Spanish.</p>
+        <a href="#contact" class="service-link">Book an Appointment →</a>
       </div>
     </div>
   </div>
@@ -1963,28 +1975,30 @@ document.querySelectorAll('.service-card, .why-feature, .testimonial-card, .cont
     // Services
     tx('.services .section-label', es?'Nuestros Servicios':'Our Services');
     txHTML('.services .section-title', es?'Cobertura de Seguro<br>Adaptada a Usted':'Insurance Coverage<br>Tailored to You');
-    tx('.services .section-subtitle', es?'Ofrecemos soluciones de seguros integrales para proteger cada aspecto de su vida y negocio.':'We offer comprehensive insurance solutions to protect every aspect of your life and business.');
+    tx('.services .section-subtitle', es?'Ofrecemos soluciones de seguros integrales y servicios de notario móvil certificado para proteger cada aspecto de su vida y negocio.':'We offer comprehensive insurance solutions and certified mobile notary services to protect every aspect of your life and business.');
     const svcData = es?[
       ['Seguro de Hogar','Proteja su mayor inversión con cobertura completa para vivienda, propiedad personal y responsabilidad civil.'],
       ['Seguro de Auto','Desde responsabilidad hasta cobertura total, encontraremos la póliza de auto ideal para mantenerle protegido en el camino.'],
       ['Seguro Comercial','Mantenga su negocio en marcha con responsabilidad civil, propiedad comercial, compensación laboral y cobertura profesional.'],
       ['Líneas Recreativas','Botes, vehículos recreativos, cuatrimotos y más — disfrute sus vehículos con la tranquilidad de estar bien cubierto.'],
       ['Vida y Salud','Asegure el futuro de su familia con seguro de vida a término y permanente, más opciones de cobertura médica individual y grupal.'],
-      ['Pólizas Paraguas','Protección adicional de responsabilidad por encima de sus pólizas estándar — para la tranquilidad que merece.']
+      ['Pólizas Paraguas','Protección adicional de responsabilidad por encima de sus pólizas estándar — para la tranquilidad que merece.'],
+      ['Servicios de Notario Móvil','Vamos a donde usted esté. Nuestro notario público certificado viaja a su hogar, oficina o hospital para notarizar documentos de forma rápida y conveniente — en inglés y español.']
     ]:[
       ['Homeowners Insurance','Protect your biggest investment with comprehensive homeowners coverage including dwelling, personal property, and liability protection.'],
       ['Auto Insurance','From liability to full coverage, we\'ll find the right auto policy to keep you protected on the road at competitive rates.'],
       ['Commercial Insurance','Keep your business running with general liability, commercial property, workers\' comp, and professional liability coverage.'],
       ['Recreational Lines','Boats, RVs, ATVs, and more — enjoy your toys with the peace of mind that they\'re properly covered.'],
       ['Life & Health','Secure your family\'s future with term and whole life insurance, plus individual and group health coverage options.'],
-      ['Umbrella Policies','Extra liability protection above and beyond your standard policies — for the peace of mind you deserve.']
+      ['Umbrella Policies','Extra liability protection above and beyond your standard policies — for the peace of mind you deserve.'],
+      ['Mobile Notary Services','We come to you. Our certified notary public travels to your home, office, or hospital to notarize documents quickly and conveniently — in English and Spanish.']
     ];
     $$('.service-card').forEach((card,i) => {
       if(!svcData[i]) return;
       const h3=card.querySelector('h3'), p=card.querySelector('p'), lnk=card.querySelector('.service-link');
       if(h3) h3.textContent=svcData[i][0];
       if(p)  p.textContent=svcData[i][1];
-      if(lnk) lnk.textContent=es?'Obtener Cotización →':'Get a Quote →';
+      if(lnk) lnk.textContent=es?(i===6?'Reservar Cita →':'Obtener Cotización →'):(i===6?'Book an Appointment →':'Get a Quote →');
     });
 
     // Why Us
