@@ -15,7 +15,7 @@
   --navy: #0a1628;
   --navy-light: #132040;
   --blue: #2563eb;
-  --blue-light: #3b82f6
+  --blue-light: #3b82f6;
   --sky: #60a5fa;
   --gold: #f59e0b;
   --gold-light: #fbbf24;
@@ -535,38 +535,30 @@ body {
 .trust-scroll-track {
   display: flex;
   align-items: center;
-  gap: 56px;
-  animation: scrollLogos 30s linear infinite;
+  gap: 64px;
   width: max-content;
   padding: 8px 0;
-}
-
-.trust-scroll-track:hover {
-  animation-play-state: paused;
-}
-
-@keyframes scrollLogos {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  will-change: transform;
 }
 
 .trust-logo {
   flex-shrink: 0;
-  height: 50px;
+  height: 44px;
   display: flex;
   align-items: center;
-  transition: all 0.3s;
 }
 
 .trust-logo img {
   height: 100%;
   width: auto;
   object-fit: contain;
-  max-width: 160px;
+  max-width: 140px;
+  filter: grayscale(1) opacity(0.55);
+  transition: filter 0.3s;
 }
 
-.trust-logo:hover {
-  transform: scale(1.08);
+.trust-logo img:hover {
+  filter: grayscale(0) opacity(1);
 }
 
 /* ===== SERVICES ===== */
@@ -854,7 +846,7 @@ body {
 
 .why-stat-box .lbl {
   font-size: 0.75rem;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.7);
   font-weight: 500;
   line-height: 1.3;
 }
@@ -1800,18 +1792,63 @@ document.querySelectorAll('.service-card, .why-feature, .testimonial-card, .cont
   observer.observe(el);
 });
 
-// ── Trust bar scroll: pause until all images loaded, then run ──
+// ── Trust bar: rAF-based continuous marquee ──
 (function () {
   const track = document.getElementById('trustTrack');
   if (!track) return;
-  track.style.animationPlayState = 'paused';
-  const imgs = [...track.querySelectorAll('img')];
-  let n = imgs.length;
-  function settle() { if (--n <= 0) track.style.animationPlayState = 'running'; }
-  imgs.forEach(img => {
-    if (img.complete) settle();
-    else { img.addEventListener('load', settle, {once:true}); img.addEventListener('error', settle, {once:true}); }
+
+  // Remove any leftover CSS animation
+  track.style.animation = 'none';
+  track.style.transform = 'translateX(0)';
+
+  const speed = 0.45; // px per frame (~27px/s at 60fps)
+  let x = 0;
+  let loopWidth = 0;
+  let rafId = null;
+
+  function startMarquee() {
+    // loopWidth = width of one full set (half of total since we have 2 identical sets)
+    loopWidth = track.scrollWidth / 2;
+    if (loopWidth < 10) { setTimeout(startMarquee, 100); return; }
+
+    if (rafId) cancelAnimationFrame(rafId);
+
+    function step() {
+      x -= speed;
+      if (x <= -loopWidth) x += loopWidth;
+      track.style.transform = 'translateX(' + x + 'px)';
+      rafId = requestAnimationFrame(step);
+    }
+    rafId = requestAnimationFrame(step);
+  }
+
+  // Pause on hover
+  track.closest('.trust-scroll-wrapper').addEventListener('mouseenter', () => {
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
   });
+  track.closest('.trust-scroll-wrapper').addEventListener('mouseleave', startMarquee);
+
+  // Wait for all images to settle then start
+  const imgs = [...track.querySelectorAll('img')];
+  let pending = imgs.filter(i => !i.complete).length;
+
+  function onSettle() {
+    if (--pending <= 0) {
+      // Two rAF ticks so layout is fully painted before measuring
+      requestAnimationFrame(() => requestAnimationFrame(startMarquee));
+    }
+  }
+
+  if (pending === 0) {
+    requestAnimationFrame(() => requestAnimationFrame(startMarquee));
+  } else {
+    imgs.forEach(img => {
+      if (!img.complete) {
+        img.addEventListener('load',  onSettle, { once: true });
+        img.addEventListener('error', onSettle, { once: true });
+      }
+    });
+  }
 })();
 </script>
 
