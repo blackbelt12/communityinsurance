@@ -744,7 +744,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: 20px;
   flex-shrink: 0;
 }
 
@@ -768,15 +768,14 @@ body {
 .why-image-main {
   width: 100%;
   border-radius: 24px;
-  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  background: linear-gradient(135deg, #0d1f42 0%, #0a1628 60%, #0f2347 100%);
   aspect-ratio: 4/3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--white);
-  font-size: 5rem;
   position: relative;
   overflow: hidden;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .why-image-main::before {
@@ -784,8 +783,80 @@ body {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 30% 40%, rgba(37, 99, 235, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 70% 60%, rgba(96, 165, 250, 0.2) 0%, transparent 50%);
+    radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.25) 0%, transparent 55%),
+    radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Decorative dots grid */
+.why-image-main::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+
+.why-visual-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.why-visual-badge {
+  background: rgba(37, 99, 235, 0.25);
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #93c5fd;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.why-stats-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.why-stat-box {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 20px 22px;
+  backdrop-filter: blur(8px);
+  transition: background 0.3s;
+}
+
+.why-stat-box:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.why-stat-box .num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -1px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.why-stat-box .num span {
+  color: #f59e0b;
+}
+
+.why-stat-box .lbl {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.5);
+  font-weight: 500;
+  line-height: 1.3;
 }
 
 .why-stat-card {
@@ -794,22 +865,24 @@ body {
   right: -20px;
   background: var(--white);
   border-radius: 20px;
-  padding: 28px 32px;
+  padding: 22px 28px;
   box-shadow: var(--shadow-xl);
   text-align: center;
+  z-index: 2;
 }
 
 .why-stat-number {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 800;
   color: var(--blue);
   letter-spacing: -1px;
 }
 
 .why-stat-label {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--gray-500);
   font-weight: 500;
+  white-space: nowrap;
 }
 
 /* ===== TESTIMONIALS ===== */
@@ -1423,42 +1496,77 @@ body {
         <h2 class="section-title">Your Neighbor,<br>Your Agent</h2>
         <p class="section-subtitle" style="margin-bottom: 36px;">We're not a faceless corporation. We're your neighbors in Benton Harbor, committed to understanding your unique needs and finding the best coverage at the best price.</p>
         <div class="why-features">
-  
-            <div class="why-feature">
-              <div class="why-feature-icon" style="background: rgba(37, 99, 235, 0.1);">🌐</div>
-              <div>
-                <h4>Bilingual Service</h4>
-                <p>We proudly serve our diverse community in both English and Spanish, making insurance accessible to everyone.</p>
-              </div>
-            </div>
 
-            <div class="why-feature">
-              <div class="why-feature-icon" style="background: rgba(245, 158, 11, 0.1);">🖋️</div>
-              <div>
-                <h4>Certified Notary Public</h4>
-                <p>In addition to insurance, we provide official notary seals for all your important legal and personal documents.</p>
-              </div>
+          <div class="why-feature">
+            <div class="why-feature-icon" style="background:rgba(37,99,235,0.1);color:#2563eb;">
+              <i class="fa-solid fa-language"></i>
             </div>
-
-            <div class="why-feature">
-              <div class="why-feature-icon" style="background: rgba(245, 158, 11, 0.1);">🤝</div>
-              <div>
-                <h4>Personal Attention</h4>
-                <p>Every client gets one-on-one time with an agent who genuinely cares about finding the right fit.</p>
-              </div>
+            <div>
+              <h4>Bilingual Service</h4>
+              <p>We proudly serve our diverse community in both English and Spanish, making insurance accessible to everyone.</p>
             </div>
+          </div>
 
-            <div class="why-feature">
-              <div class="why-feature-icon" style="background: rgba(16, 185, 129, 0.1);">💰</div>
-              <div>
-                <h4>Best Rates Guaranteed</h4>
-                <p>We shop multiple carriers to ensure you get the most competitive rates for your coverage needs.</p>
-              </div>
-</div> </div> <div class="why-image">
-        <div class="why-image-main">🏡</div>
+          <div class="why-feature">
+            <div class="why-feature-icon" style="background:rgba(245,158,11,0.1);color:#d97706;">
+              <i class="fa-solid fa-stamp"></i>
+            </div>
+            <div>
+              <h4>Certified Notary Public</h4>
+              <p>In addition to insurance, we provide official notary seals for all your important legal and personal documents.</p>
+            </div>
+          </div>
+
+          <div class="why-feature">
+            <div class="why-feature-icon" style="background:rgba(168,85,247,0.1);color:#9333ea;">
+              <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <div>
+              <h4>Personal Attention</h4>
+              <p>Every client gets one-on-one time with an agent who genuinely cares about finding the right fit.</p>
+            </div>
+          </div>
+
+          <div class="why-feature">
+            <div class="why-feature-icon" style="background:rgba(16,185,129,0.1);color:#059669;">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div>
+              <h4>Best Rates Guaranteed</h4>
+              <p>We shop multiple carriers to ensure you get the most competitive rates for your coverage needs.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="why-image">
+        <div class="why-image-main">
+          <div class="why-visual-top">
+            <div class="why-visual-badge"><i class="fa-solid fa-location-dot" style="margin-right:6px;"></i>Benton Harbor, MI</div>
+          </div>
+          <div class="why-stats-grid">
+            <div class="why-stat-box">
+              <div class="num">7<span>+</span></div>
+              <div class="lbl">Insurance Carriers</div>
+            </div>
+            <div class="why-stat-box">
+              <div class="num">4.2<span>★</span></div>
+              <div class="lbl">Google Rating</div>
+            </div>
+            <div class="why-stat-box">
+              <div class="num">EN<span>/</span>ES</div>
+              <div class="lbl">Bilingual Service</div>
+            </div>
+            <div class="why-stat-box">
+              <div class="num">98<span>%</span></div>
+              <div class="lbl">Client Retention</div>
+            </div>
+          </div>
+        </div>
         <div class="why-stat-card">
-          <div class="why-stat-number">98%</div>
-          <div class="why-stat-label">Client Retention Rate</div>
+          <div class="why-stat-number">Local</div>
+          <div class="why-stat-label">Independent Agent</div>
         </div>
       </div>
 
