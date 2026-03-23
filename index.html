@@ -535,7 +535,7 @@ body {
 .trust-scroll-track {
   display: flex;
   align-items: center;
-  gap: 64px;
+  gap: 110px;
   width: max-content;
   padding: 8px 0;
   will-change: transform;
@@ -553,12 +553,12 @@ body {
   width: auto;
   object-fit: contain;
   max-width: 140px;
-  filter: grayscale(1) opacity(0.55);
-  transition: filter 0.3s;
+  transition: opacity 0.3s;
+  opacity: 0.85;
 }
 
 .trust-logo img:hover {
-  filter: grayscale(0) opacity(1);
+  opacity: 1;
 }
 
 /* ===== SERVICES ===== */
@@ -1840,7 +1840,7 @@ document.querySelectorAll('.service-card, .why-feature, .testimonial-card, .cont
   track.style.animation = 'none';
   track.style.transform = 'translateX(0)';
 
-  const speed = 0.45; // px per frame (~27px/s at 60fps)
+  const speed = 0.28; // px per frame (~17px/s at 60fps)
   let x = 0;
   let loopWidth = 0;
   let rafId = null;
