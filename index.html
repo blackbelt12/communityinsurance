@@ -1298,6 +1298,39 @@ body {
   .footer-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
 }
+
+/* ===== LANG TOGGLE ===== */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--white);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: inherit;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+.lang-toggle:hover {
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.4);
+}
+.lang-toggle.active-es {
+  background: rgba(37, 99, 235, 0.2);
+  border-color: rgba(96, 165, 250, 0.5);
+  color: var(--sky);
+}
 </style>
 </head>
 <body>
@@ -1308,13 +1341,19 @@ body {
     <a href="#" class="nav-logo">
       <span class="nav-logo-bold">Community</span><span class="nav-logo-thin">&nbsp;Insurance</span>
     </a>
-    <ul class="nav-links">
-      <li><a href="#services">Services</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#testimonials">Reviews</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="#contact" class="nav-cta">Get a Quote →</a></li>
-    </ul>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#contact" class="nav-cta">Get a Quote →</a></li>
+      </ul>
+      <button class="lang-toggle" id="langToggle" onclick="toggleLang()">
+        <i class="fa-solid fa-globe"></i>
+        <span id="langLabel">ES</span>
+      </button>
+    </div>
   </div>
 </nav>
 
@@ -1848,6 +1887,171 @@ document.querySelectorAll('.service-card, .why-feature, .testimonial-card, .cont
         img.addEventListener('error', onSettle, { once: true });
       }
     });
+  }
+})();
+
+// ── Language Toggle ──
+(function() {
+  let lang = localStorage.getItem('lang') || 'en';
+
+  function applyLang(l) {
+    const es = l === 'es';
+    const $ = s => document.querySelector(s);
+    const $$ = s => [...document.querySelectorAll(s)];
+    const tx = (s, v) => { const e=$(s); if(e) e.textContent=v; };
+    const txHTML = (s, v) => { const e=$(s); if(e) e.innerHTML=v; };
+
+    // Navbar
+    tx('.nav-links a[href="#services"]', es?'Servicios':'Services');
+    tx('.nav-links a[href="#about"]', es?'Nosotros':'About');
+    tx('.nav-links a[href="#testimonials"]', es?'Reseñas':'Reviews');
+    $$('.nav-links a[href="#contact"]:not(.nav-cta)').forEach(e => e.textContent = es?'Contacto':'Contact');
+    tx('.nav-cta', es?'Cotización →':'Get a Quote →');
+
+    // Hero
+    tx('.hero-badge', es?'Sirviendo a Benton Harbor y el Suroeste de Michigan':'Serving Benton Harbor & Southwest Michigan');
+    txHTML('.hero h1', es?'Seguros Que <span class="highlight">Protegen</span> Lo Que Más Importa':'Insurance That <span class="highlight">Protects</span> What Matters Most');
+    tx('.hero-text', es?'Somos su agencia de seguros local y bilingüe, dedicada a encontrar cobertura personalizada para su hogar, auto, negocio y vida — a precios que funcionan para usted.':'We\'re your local, bilingual insurance agency dedicated to finding personalized coverage for your home, auto, business, and life — at rates that work for you.');
+    tx('.hero-buttons .btn-primary', es?'Obtener Cotización Gratuita →':'Get a Free Quote →');
+    tx('.hero-buttons .btn-secondary', es?'Explorar Cobertura ↓':'Explore Coverage ↓');
+    const sl = $$('.hero-stats .stat-label');
+    const slData = es?['Familias Protegidas','Años de Experiencia','Calificación Google']:['Families Protected','Years Experience','Google Rating'];
+    sl.forEach((e,i) => { if(slData[i]) e.textContent=slData[i]; });
+    tx('.hero-card-title', es?'Su Cobertura':'Your Coverage');
+    tx('.hero-card-subtitle', es?'Protección todo en uno':'All-in-one protection');
+    const cn = $$('.coverage-name'), cd = $$('.coverage-desc');
+    const covData = es?[['Hogar','Protección total de propiedad'],['Seguro de Auto','Cobertura completa'],['Comercial','Protección empresarial'],['Vida y Salud','Seguridad familiar']]:
+                      [['Homeowners','Full property protection'],['Auto Insurance','Comprehensive coverage'],['Commercial','Business protection'],['Life & Health','Family security']];
+    cn.forEach((e,i) => { if(covData[i]) e.textContent=covData[i][0]; });
+    cd.forEach((e,i) => { if(covData[i]) e.textContent=covData[i][1]; });
+    tx('.float-card-1 .text-sm', es?'Ahorro Promedio':'Avg. Savings');
+    tx('.float-card-2 .reviews', es?'22 Reseñas de Google':'22 Google Reviews');
+
+    // Trust bar
+    tx('.trust-label', es?'Socios y Aseguradoras de Confianza':'Trusted Partners & Carriers');
+
+    // Services
+    tx('.services .section-label', es?'Nuestros Servicios':'Our Services');
+    txHTML('.services .section-title', es?'Cobertura de Seguro<br>Adaptada a Usted':'Insurance Coverage<br>Tailored to You');
+    tx('.services .section-subtitle', es?'Ofrecemos soluciones de seguros integrales para proteger cada aspecto de su vida y negocio.':'We offer comprehensive insurance solutions to protect every aspect of your life and business.');
+    const svcData = es?[
+      ['Seguro de Hogar','Proteja su mayor inversión con cobertura completa para vivienda, propiedad personal y responsabilidad civil.'],
+      ['Seguro de Auto','Desde responsabilidad hasta cobertura total, encontraremos la póliza de auto ideal para mantenerle protegido en el camino.'],
+      ['Seguro Comercial','Mantenga su negocio en marcha con responsabilidad civil, propiedad comercial, compensación laboral y cobertura profesional.'],
+      ['Líneas Recreativas','Botes, vehículos recreativos, cuatrimotos y más — disfrute sus vehículos con la tranquilidad de estar bien cubierto.'],
+      ['Vida y Salud','Asegure el futuro de su familia con seguro de vida a término y permanente, más opciones de cobertura médica individual y grupal.'],
+      ['Pólizas Paraguas','Protección adicional de responsabilidad por encima de sus pólizas estándar — para la tranquilidad que merece.']
+    ]:[
+      ['Homeowners Insurance','Protect your biggest investment with comprehensive homeowners coverage including dwelling, personal property, and liability protection.'],
+      ['Auto Insurance','From liability to full coverage, we\'ll find the right auto policy to keep you protected on the road at competitive rates.'],
+      ['Commercial Insurance','Keep your business running with general liability, commercial property, workers\' comp, and professional liability coverage.'],
+      ['Recreational Lines','Boats, RVs, ATVs, and more — enjoy your toys with the peace of mind that they\'re properly covered.'],
+      ['Life & Health','Secure your family\'s future with term and whole life insurance, plus individual and group health coverage options.'],
+      ['Umbrella Policies','Extra liability protection above and beyond your standard policies — for the peace of mind you deserve.']
+    ];
+    $$('.service-card').forEach((card,i) => {
+      if(!svcData[i]) return;
+      const h3=card.querySelector('h3'), p=card.querySelector('p'), lnk=card.querySelector('.service-link');
+      if(h3) h3.textContent=svcData[i][0];
+      if(p)  p.textContent=svcData[i][1];
+      if(lnk) lnk.textContent=es?'Obtener Cotización →':'Get a Quote →';
+    });
+
+    // Why Us
+    tx('.why-us .section-label', es?'¿Por Qué Elegirnos?':'Why Choose Us');
+    txHTML('.why-us .section-title', es?'Su Vecino,<br>Su Agente':'Your Neighbor,<br>Your Agent');
+    tx('.why-us .section-subtitle', es?'No somos una corporación sin rostro. Somos sus vecinos en Benton Harbor, comprometidos a entender sus necesidades únicas y encontrar la mejor cobertura al mejor precio.':'We\'re not a faceless corporation. We\'re your neighbors in Benton Harbor, committed to understanding your unique needs and finding the best coverage at the best price.');
+    const featData = es?[
+      ['Servicio Bilingüe','Con orgullo servimos a nuestra diversa comunidad en inglés y español, haciendo que el seguro sea accesible para todos.'],
+      ['Notario Público Certificado','Además de seguros, proporcionamos sellos notariales oficiales para todos sus documentos legales y personales importantes.'],
+      ['Atención Personalizada','Cada cliente recibe tiempo individual con un agente que genuinamente se preocupa por encontrar la opción adecuada.'],
+      ['Las Mejores Tarifas Garantizadas','Comparamos múltiples aseguradoras para asegurar que obtenga las tarifas más competitivas para sus necesidades de cobertura.']
+    ]:[
+      ['Bilingual Service','We proudly serve our diverse community in both English and Spanish, making insurance accessible to everyone.'],
+      ['Certified Notary Public','In addition to insurance, we provide official notary seals for all your important legal and personal documents.'],
+      ['Personal Attention','Every client gets one-on-one time with an agent who genuinely cares about finding the right fit.'],
+      ['Best Rates Guaranteed','We shop multiple carriers to ensure you get the most competitive rates for your coverage needs.']
+    ];
+    $$('.why-feature').forEach((feat,i) => {
+      if(!featData[i]) return;
+      const h4=feat.querySelector('h4'), p=feat.querySelector('p');
+      if(h4) h4.textContent=featData[i][0];
+      if(p)  p.textContent=featData[i][1];
+    });
+    const lblData = es?['Aseguradoras','Calificación Google','Servicio Bilingüe','Retención de Clientes']:['Insurance Carriers','Google Rating','Bilingual Service','Client Retention'];
+    $$('.why-stat-box .lbl').forEach((e,i) => { if(lblData[i]) e.textContent=lblData[i]; });
+    tx('.why-stat-label', es?'Agente Independiente':'Independent Agent');
+
+    // Testimonials
+    tx('.testimonials .section-label', es?'Testimonios':'Testimonials');
+    tx('.testimonials .section-title', es?'Lo Que Dicen Nuestros Clientes':'What Our Clients Say');
+    tx('.testimonials .section-subtitle', es?'Historias reales de las familias y negocios que protegemos cada día.':'Real stories from the families and businesses we protect every day.');
+    const revLink = $('.testimonials a[target="_blank"]');
+    if(revLink) revLink.textContent = es?'Ver todas las reseñas de Google →':'Read all Google Reviews →';
+
+    // CTA
+    txHTML('.cta-box h2', es?'¿Listo para Ahorrar en<br>su Seguro?':'Ready to Save on<br>Your Insurance?');
+    tx('.cta-box p', es?'Obtenga una cotización gratuita y sin compromiso en minutos. Compararemos múltiples aseguradoras para encontrar la mejor tarifa.':'Get a free, no-obligation quote in minutes. We\'ll shop multiple carriers to find you the best rate.');
+    tx('.btn-white', es?'Obtener Cotización Gratuita →':'Get Your Free Quote →');
+    tx('.cta-buttons .btn-secondary', es?'Llamar (269) 925-8811':'Call (269) 925-8811');
+
+    // Contact
+    tx('.contact .section-label', es?'Contáctenos':'Get In Touch');
+    txHTML('.contact .section-title', es?'Encontremos Su<br>Cobertura Perfecta':'Let\'s Find Your<br>Perfect Coverage');
+    tx('.contact .section-subtitle', es?'Ya sea que necesite una cotización, tenga preguntas o desee revisar su póliza actual — estamos aquí para ayudarle.':'Whether you need a quote, have questions, or want to review your current policy — we\'re here to help.');
+    const ilData = es?['Oficina','Teléfono','Correo','Horario']:['Office','Phone','Email','Hours'];
+    $$('.contact-info-label').forEach((e,i) => { if(ilData[i]) e.textContent=ilData[i]; });
+    const iv = $$('.contact-info-value');
+    if(iv[3]) iv[3].textContent = es?'Lun–Vie: 9am – 5pm':'Mon–Fri: 9am – 5pm';
+    tx('.contact-form h3', es?'Solicitar Cotización Gratuita':'Request a Free Quote');
+    tx('.contact-form .form-subtitle', es?'Complete el formulario y le responderemos dentro de 24 horas.':'Fill out the form and we\'ll get back to you within 24 hours.');
+    const flData = es?['Nombre Completo *','Correo Electrónico *','Teléfono','Tipo de Seguro','Mensaje']:['Full Name *','Email *','Phone','Insurance Type','Message'];
+    $$('.form-group label').forEach((e,i) => { if(flData[i]) e.textContent=flData[i]; });
+    const ni=$('.form-group input[type="text"]'), ei=$('.form-group input[type="email"]'), pi=$('.form-group input[type="tel"]'), ta=$('.form-group textarea');
+    if(ni) ni.placeholder=es?'Su nombre':'Your name';
+    if(ei) ei.placeholder=es?'usted@email.com':'you@email.com';
+    if(ta) ta.placeholder=es?'Cuéntenos sobre sus necesidades de seguro...':'Tell us about your insurance needs...';
+    const sel=$('.contact-form select');
+    if(sel) {
+      const od=es?['Seleccione tipo de cobertura...','Hogar','Auto','Comercial','Vida y Salud','Recreativo','Paquete / Múltiple']:['Select coverage type...','Homeowners','Auto','Commercial','Life & Health','Recreational','Bundle / Multiple'];
+      [...sel.options].forEach((o,i) => { if(od[i]) o.text=od[i]; });
+    }
+    tx('.form-submit', es?'Enviar Solicitud →':'Send Request →');
+
+    // Footer
+    tx('.footer-brand p', es?'Su agencia de seguros local de confianza en Benton Harbor, MI. Orgullosamente sirviendo al Suroeste de Michigan con soluciones de seguro bilingües y personalizadas.':'Your trusted local insurance agency in Benton Harbor, MI. Proudly serving Southwest Michigan with bilingual, personalized insurance solutions.');
+    const fh4Data = es?['Seguros','Empresa','Contacto']:['Insurance','Company','Contact'];
+    $$('.footer h4').forEach((e,i) => { if(fh4Data[i]) e.textContent=fh4Data[i]; });
+    const fiData = es?['Hogar','Auto','Comercial','Vida y Salud','Recreativo']:['Homeowners','Auto','Commercial','Life & Health','Recreational'];
+    $$('.footer-grid > div:nth-child(2) .footer-links a').forEach((e,i) => { if(fiData[i]) e.textContent=fiData[i]; });
+    const fcData = es?['Sobre Nosotros','Reseñas','Contacto','Reclamaciones']:['About Us','Reviews','Contact','Claims'];
+    $$('.footer-grid > div:nth-child(3) .footer-links a').forEach((e,i) => { if(fcData[i]) e.textContent=fcData[i]; });
+    tx('.footer-bottom p', es?'© 2026 Community Insurance Agency. Todos los derechos reservados.':'© 2026 Community Insurance Agency. All rights reserved.');
+
+    document.documentElement.lang = l;
+  }
+
+  function toggleLang() {
+    lang = lang === 'en' ? 'es' : 'en';
+    localStorage.setItem('lang', lang);
+    applyLang(lang);
+    const btn = document.getElementById('langToggle');
+    if (btn) {
+      btn.querySelector('#langLabel').textContent = lang === 'en' ? 'ES' : 'EN';
+      btn.classList.toggle('active-es', lang === 'es');
+    }
+  }
+
+  window.toggleLang = toggleLang;
+
+  // Apply saved language on page load
+  if (lang === 'es') {
+    applyLang('es');
+    const btn = document.getElementById('langToggle');
+    if (btn) {
+      btn.querySelector('#langLabel').textContent = 'EN';
+      btn.classList.add('active-es');
+    }
   }
 })();
 </script>
