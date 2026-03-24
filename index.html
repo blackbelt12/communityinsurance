@@ -1330,46 +1330,64 @@ body {
   .nav-cta { text-align: center; padding: 16px 20px !important; margin-top: 8px; font-size: 1rem !important; }
 
   /* ── Spacing ── */
-  .section-container, .nav-container { padding-left: 20px; padding-right: 20px; }
-  .hero-container { padding: 0 20px; }
-  .services, .why-us, .testimonials, .cta-section, .contact { padding: 72px 0; }
-  .footer { padding: 60px 0 32px; }
-  .trust-bar { padding: 20px 0; }
+  .section-container, .nav-container { padding-left: 18px; padding-right: 18px; }
+  .hero-container { padding: 0 18px; }
+  .services, .why-us, .testimonials, .cta-section, .contact { padding: 52px 0; }
+  .footer { padding: 48px 0 28px; }
+  .trust-bar { padding: 16px 0; }
 
-  /* ── Hero ── */
-  .hero h1 { font-size: 2.2rem; letter-spacing: -0.5px; }
-  .hero-text { font-size: 1rem; }
-  .hero-buttons { flex-direction: column; }
-  .hero-stats { flex-direction: row; flex-wrap: wrap; gap: 16px 28px; }
-  .stat-number { font-size: 1.8rem; }
-  .hero-card { padding: 28px 20px; }
+  /* ── Hero: hide the card, show only text ── */
+  .hero { min-height: auto; padding-top: 88px !important; padding-bottom: 48px; }
+  .hero h1 { font-size: 2rem; letter-spacing: -0.5px; margin-bottom: 16px; }
+  .hero-badge { font-size: 0.78rem; padding: 6px 14px; margin-bottom: 18px; }
+  .hero-text { font-size: 0.95rem; margin-bottom: 28px; }
+  .hero-buttons { flex-direction: column; gap: 10px; }
+  .hero-buttons .btn-primary, .hero-buttons .btn-secondary { padding: 13px 24px; font-size: 0.95rem; justify-content: center; }
+  .hero-stats { flex-direction: row; flex-wrap: wrap; gap: 12px 24px; margin-top: 32px; }
+  .stat-number { font-size: 1.6rem; }
+  .stat-label { font-size: 0.78rem; }
+  .hero-visual { display: none; }
   .float-card { display: none; }
 
   /* ── Typography ── */
-  .section-title { font-size: 2rem; }
+  .section-title { font-size: 1.8rem; letter-spacing: -0.5px; }
+  .section-label { font-size: 0.75rem; }
+  .section-subtitle { font-size: 0.92rem; }
 
   /* ── Services ── */
-  .services-grid { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr; gap: 16px; }
+  .service-card { padding: 24px 20px; }
   .service-card:last-child:nth-child(2n + 1) { justify-self: auto; max-width: none; }
 
+  /* ── Why Us ── */
+  .why-feature { gap: 14px; padding: 16px; }
+  .why-stats-grid { gap: 12px; }
+  .why-stat-box { padding: 16px 12px; }
+  .why-image-main { padding: 24px 20px; }
+
   /* ── Testimonials ── */
-  .testimonials-grid { max-width: 100%; }
+  .testimonials-grid { max-width: 100%; gap: 16px; }
+  .testimonial-card { padding: 24px 20px; }
 
   /* ── CTA ── */
-  .cta-box { padding: 48px 24px; border-radius: 20px; }
-  .cta-box h2 { font-size: 1.9rem; }
-  .cta-buttons { flex-direction: column; align-items: center; }
+  .cta-box { padding: 40px 20px; border-radius: 18px; }
+  .cta-box h2 { font-size: 1.7rem; margin-bottom: 12px; }
+  .cta-box p { font-size: 0.92rem; margin-bottom: 28px; }
+  .cta-buttons { flex-direction: column; align-items: stretch; gap: 10px; }
+  .btn-white, .cta-buttons .btn-secondary { padding: 14px 24px; justify-content: center; }
 
   /* ── Contact ── */
-  .contact-form { padding: 32px 20px; }
+  .contact-form { padding: 24px 18px; }
+  .contact-info-card { padding: 16px 18px; }
   .form-row { grid-template-columns: 1fr; }
 
   /* ── Footer ── */
-  .footer-grid { grid-template-columns: 1fr; }
-  .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .footer h4 { margin-bottom: 12px; }
 
   /* ── Lang toggle ── */
-  .lang-toggle { padding: 7px 12px; font-size: 0.8rem; }
+  .lang-toggle { padding: 7px 10px; font-size: 0.78rem; gap: 4px; }
 }
 
 /* ===== LANG TOGGLE ===== */
