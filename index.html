@@ -1313,12 +1313,19 @@ body {
     padding: 92px 24px 40px;
     flex-direction: column;
     gap: 4px;
-    transform: translateY(-105%);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 999;
+    /* Hidden by default — no transform, just invisible */
     display: flex !important;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
   }
-  .nav-links.mobile-open { transform: translateY(0); }
+  .nav-links.mobile-open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
   .nav-links li { width: 100%; }
   .nav-links a {
     display: block;
@@ -1425,7 +1432,7 @@ body {
 
 /* ===== HAMBURGER ===== */
 .hamburger {
-  display: none;
+  /* display controlled by media queries below — do NOT set display here */
   flex-direction: column;
   justify-content: center;
   gap: 5px;
@@ -1435,6 +1442,8 @@ body {
   padding: 8px;
   margin-left: 4px;
 }
+/* Hide on desktop, show on mobile */
+@media (min-width: 641px) { .hamburger { display: none; } }
 .hamburger span {
   display: block;
   width: 22px;
