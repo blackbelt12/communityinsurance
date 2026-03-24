@@ -1480,8 +1480,11 @@ body {
 /* ===== HAMBURGER ===== */
 .hamburger {
   /* display controlled by media queries below — do NOT set display here */
+  position: relative; /* required for z-index to take effect */
+  z-index: 1000;      /* stay above .nav-links overlay (z-index 999) within the navbar stacking context */
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 5px;
   background: none;
   border: none;
@@ -2267,21 +2270,45 @@ document.querySelectorAll('.service-card, .why-feature, .testimonial-card, .cont
   window.toggleLang = toggleLang;
 
   // ── Mobile Navigation ──
+  function closeMobileNav() {
+    const nav = document.querySelector('.nav-links');
+    const btn = document.getElementById('hamburger');
+    nav.classList.remove('mobile-open');
+    if (btn) btn.classList.remove('open');
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+  }
+
   window.toggleMobileNav = function() {
     const nav = document.querySelector('.nav-links');
     const btn = document.getElementById('hamburger');
     const isOpen = nav.classList.toggle('mobile-open');
     btn.classList.toggle('open', isOpen);
-    document.body.style.overflow = isOpen ? 'hidden' : '';
+    if (isOpen) {
+      // Fix iOS Safari: position:fixed on body prevents scroll behind overlay
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+    } else {
+      const scrollY = -parseInt(document.body.style.top || '0', 10);
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollY);
+    }
   };
+
   // Close mobile nav when any link is tapped
   document.querySelectorAll('.nav-links a').forEach(a => {
-    a.addEventListener('click', () => {
-      document.querySelector('.nav-links').classList.remove('mobile-open');
-      const btn = document.getElementById('hamburger');
-      if (btn) btn.classList.remove('open');
-      document.body.style.overflow = '';
-    });
+    a.addEventListener('click', closeMobileNav);
+  });
+
+  // Close mobile nav when tapping the overlay background (not a menu item)
+  document.querySelector('.nav-links').addEventListener('click', function(e) {
+    if (e.target === this) closeMobileNav();
   });
 
   // Apply saved language on page load
