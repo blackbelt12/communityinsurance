@@ -1011,6 +1011,23 @@ body {
   letter-spacing: -1px;
 }
 
+.animated-question {
+  display: inline-block;
+  color: var(--gold-light);
+  transform-origin: bottom center;
+  animation: questionWiggle 2.5s ease-in-out infinite;
+}
+
+@keyframes questionWiggle {
+  0%   { transform: rotate(0deg) scale(1); }
+  10%  { transform: rotate(-12deg) scale(1.15); }
+  20%  { transform: rotate(12deg) scale(1.2); }
+  30%  { transform: rotate(-8deg) scale(1.1); }
+  40%  { transform: rotate(6deg) scale(1.05); }
+  50%  { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
 .cta-box p {
   font-size: 1.1rem;
   color: rgba(255,255,255,0.6);
@@ -1843,7 +1860,7 @@ body {
 <section class="cta-section">
   <div class="section-container">
     <div class="cta-box">
-      <h2>Ready to Save on<br>Your Insurance?</h2>
+      <h2>Ready to Save on<br>Your Insurance<span class="animated-question">?</span></h2>
       <p>Get a free, no-obligation quote in minutes. We'll shop multiple carriers to find you the best rate.</p>
       <div class="cta-buttons">
         <a href="#contact" class="btn-white">Get Your Free Quote →</a>
@@ -2180,7 +2197,7 @@ document.querySelectorAll('.service-card, .why-feature, .testimonial-card, .cont
     if(revLink) revLink.textContent = es?'Ver todas las reseñas de Google →':'Read all Google Reviews →';
 
     // CTA
-    txHTML('.cta-box h2', es?'¿Listo para Ahorrar en<br>su Seguro?':'Ready to Save on<br>Your Insurance?');
+    txHTML('.cta-box h2', es?'¿Listo para Ahorrar en<br>su Seguro<span class="animated-question">?</span>':'Ready to Save on<br>Your Insurance<span class="animated-question">?</span>');
     tx('.cta-box p', es?'Obtenga una cotización gratuita y sin compromiso en minutos. Compararemos múltiples aseguradoras para encontrar la mejor tarifa.':'Get a free, no-obligation quote in minutes. We\'ll shop multiple carriers to find you the best rate.');
     tx('.btn-white', es?'Obtener Cotización Gratuita →':'Get Your Free Quote →');
     tx('.cta-buttons .btn-secondary', es?'Llamar (269) 925-8811':'Call (269) 925-8811');
