@@ -668,9 +668,9 @@ body {
 .service-icon.teal   { background: rgba(20, 184, 166, 0.1);  color: #0d9488; }
 .service-icon.gold   { background: rgba(180, 83, 9, 0.1);    color: #b45309; }
 
-/* Center a lone card when it's the only one in its row */
-.service-card:last-child:nth-child(3n + 1) {
-  grid-column: 2;
+/* Center a lone card on 3-col layout only */
+@media (min-width: 1025px) {
+  .service-card:last-child:nth-child(3n + 1) { grid-column: 2; }
 }
 
 .service-card h3 {
@@ -1285,24 +1285,91 @@ body {
   .hero h1 { font-size: 3.2rem; }
   .hero-visual { max-width: 500px; margin: 0 auto; }
   .services-grid { grid-template-columns: repeat(2, 1fr); }
+  /* Center lone last card on 2-col grid */
+  .service-card:last-child:nth-child(2n + 1) { justify-self: center; max-width: 340px; width: 100%; }
   .why-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
   .testimonials-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
   .contact-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* Tablet */
+@media (max-width: 768px) {
+  .section-container, .nav-container { padding-left: 24px; padding-right: 24px; }
+  .hero-container { padding: 0 24px; }
+  .why-grid { grid-template-columns: 1fr; }
+}
+
+/* Mobile */
 @media (max-width: 640px) {
-  .hero h1 { font-size: 2.4rem; }
-  .hero-stats { flex-direction: column; gap: 20px; }
+  /* ── Hamburger & Mobile Nav ── */
+  .hamburger { display: flex; }
+  .nav-links {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10, 22, 40, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 92px 24px 40px;
+    flex-direction: column;
+    gap: 4px;
+    transform: translateY(-105%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+    display: flex !important;
+  }
+  .nav-links.mobile-open { transform: translateY(0); }
+  .nav-links li { width: 100%; }
+  .nav-links a {
+    display: block;
+    padding: 14px 20px;
+    font-size: 1.05rem;
+    border-radius: 12px;
+    color: rgba(255,255,255,0.8);
+  }
+  .nav-cta { text-align: center; padding: 16px 20px !important; margin-top: 8px; font-size: 1rem !important; }
+
+  /* ── Spacing ── */
+  .section-container, .nav-container { padding-left: 20px; padding-right: 20px; }
+  .hero-container { padding: 0 20px; }
+  .services, .why-us, .testimonials, .cta-section, .contact { padding: 72px 0; }
+  .footer { padding: 60px 0 32px; }
+  .trust-bar { padding: 20px 0; }
+
+  /* ── Hero ── */
+  .hero h1 { font-size: 2.2rem; letter-spacing: -0.5px; }
+  .hero-text { font-size: 1rem; }
   .hero-buttons { flex-direction: column; }
+  .hero-stats { flex-direction: row; flex-wrap: wrap; gap: 16px 28px; }
+  .stat-number { font-size: 1.8rem; }
+  .hero-card { padding: 28px 20px; }
+  .float-card { display: none; }
+
+  /* ── Typography ── */
+  .section-title { font-size: 2rem; }
+
+  /* ── Services ── */
   .services-grid { grid-template-columns: 1fr; }
-  .section-title { font-size: 2.2rem; }
-  .cta-box { padding: 48px 28px; }
-  .cta-box h2 { font-size: 2rem; }
+  .service-card:last-child:nth-child(2n + 1) { justify-self: auto; max-width: none; }
+
+  /* ── Testimonials ── */
+  .testimonials-grid { max-width: 100%; }
+
+  /* ── CTA ── */
+  .cta-box { padding: 48px 24px; border-radius: 20px; }
+  .cta-box h2 { font-size: 1.9rem; }
   .cta-buttons { flex-direction: column; align-items: center; }
-  .nav-links { display: none; }
-  .footer-grid { grid-template-columns: 1fr; }
+
+  /* ── Contact ── */
+  .contact-form { padding: 32px 20px; }
   .form-row { grid-template-columns: 1fr; }
+
+  /* ── Footer ── */
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+
+  /* ── Lang toggle ── */
+  .lang-toggle { padding: 7px 12px; font-size: 0.8rem; }
 }
 
 /* ===== LANG TOGGLE ===== */
@@ -1337,6 +1404,30 @@ body {
   border-color: rgba(96, 165, 250, 0.5);
   color: var(--sky);
 }
+
+/* ===== HAMBURGER ===== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  margin-left: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 </style>
 </head>
 <body>
@@ -1358,6 +1449,11 @@ body {
       <button class="lang-toggle" id="langToggle" onclick="toggleLang()">
         <i class="fa-solid fa-globe"></i>
         <span id="langLabel">ES</span>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" onclick="toggleMobileNav()">
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
     </div>
   </div>
@@ -2087,6 +2183,24 @@ document.querySelectorAll('.service-card, .why-feature, .testimonial-card, .cont
   }
 
   window.toggleLang = toggleLang;
+
+  // ── Mobile Navigation ──
+  window.toggleMobileNav = function() {
+    const nav = document.querySelector('.nav-links');
+    const btn = document.getElementById('hamburger');
+    const isOpen = nav.classList.toggle('mobile-open');
+    btn.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  };
+  // Close mobile nav when any link is tapped
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.querySelector('.nav-links').classList.remove('mobile-open');
+      const btn = document.getElementById('hamburger');
+      if (btn) btn.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
 
   // Apply saved language on page load
   if (lang === 'es') {
