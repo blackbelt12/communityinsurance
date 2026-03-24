@@ -1516,42 +1516,42 @@ body {
     <div class="hero-visual">
       <div class="hero-card">
         <div class="hero-card-header">
-          <div class="hero-card-icon">🛡️</div>
+          <div class="hero-card-icon"><i class="fa-solid fa-star" style="font-size:22px;color:#f59e0b;"></i></div>
           <div>
-            <div class="hero-card-title">Your Coverage</div>
-            <div class="hero-card-subtitle">All-in-one protection</div>
+            <div class="hero-card-title">Why Choose Us</div>
+            <div class="hero-card-subtitle">Your trusted local agency</div>
           </div>
         </div>
         <div class="coverage-items">
           <div class="coverage-item">
-            <div class="coverage-icon home">🏠</div>
+            <div class="coverage-icon home"><i class="fa-solid fa-language"></i></div>
             <div>
-              <div class="coverage-name">Homeowners</div>
-              <div class="coverage-desc">Full property protection</div>
+              <div class="coverage-name">Bilingual Service</div>
+              <div class="coverage-desc">English & Spanish</div>
             </div>
             <div class="coverage-check">✓</div>
           </div>
           <div class="coverage-item">
-            <div class="coverage-icon auto">🚗</div>
+            <div class="coverage-icon auto"><i class="fa-solid fa-shield-halved"></i></div>
             <div>
-              <div class="coverage-name">Auto Insurance</div>
-              <div class="coverage-desc">Comprehensive coverage</div>
+              <div class="coverage-name">7+ Top Carriers</div>
+              <div class="coverage-desc">Best rates guaranteed</div>
             </div>
             <div class="coverage-check">✓</div>
           </div>
           <div class="coverage-item">
-            <div class="coverage-icon business">🏢</div>
+            <div class="coverage-icon business"><i class="fa-solid fa-file-signature"></i></div>
             <div>
-              <div class="coverage-name">Commercial</div>
-              <div class="coverage-desc">Business protection</div>
+              <div class="coverage-name">Certified Notary</div>
+              <div class="coverage-desc">Mobile service available</div>
             </div>
             <div class="coverage-check">✓</div>
           </div>
           <div class="coverage-item">
-            <div class="coverage-icon life">❤️</div>
+            <div class="coverage-icon life"><i class="fa-solid fa-location-dot"></i></div>
             <div>
-              <div class="coverage-name">Life & Health</div>
-              <div class="coverage-desc">Family security</div>
+              <div class="coverage-name">Local & Independent</div>
+              <div class="coverage-desc">Benton Harbor, MI</div>
             </div>
             <div class="coverage-check">✓</div>
           </div>
@@ -2082,11 +2082,11 @@ document.querySelectorAll('.service-card, .why-feature, .testimonial-card, .cont
     const sl = $$('.hero-stats .stat-label');
     const slData = es?['Familias Protegidas','Años de Experiencia','Calificación Google']:['Families Protected','Years Experience','Google Rating'];
     sl.forEach((e,i) => { if(slData[i]) e.textContent=slData[i]; });
-    tx('.hero-card-title', es?'Su Cobertura':'Your Coverage');
-    tx('.hero-card-subtitle', es?'Protección todo en uno':'All-in-one protection');
+    tx('.hero-card-title', es?'¿Por Qué Elegirnos?':'Why Choose Us');
+    tx('.hero-card-subtitle', es?'Su agencia local de confianza':'Your trusted local agency');
     const cn = $$('.coverage-name'), cd = $$('.coverage-desc');
-    const covData = es?[['Hogar','Protección total de propiedad'],['Seguro de Auto','Cobertura completa'],['Comercial','Protección empresarial'],['Vida y Salud','Seguridad familiar']]:
-                      [['Homeowners','Full property protection'],['Auto Insurance','Comprehensive coverage'],['Commercial','Business protection'],['Life & Health','Family security']];
+    const covData = es?[['Servicio Bilingüe','Inglés y Español'],['7+ Aseguradoras','Las mejores tarifas'],['Notario Certificado','Servicio móvil disponible'],['Local e Independiente','Benton Harbor, MI']]:
+                      [['Bilingual Service','English & Spanish'],['7+ Top Carriers','Best rates guaranteed'],['Certified Notary','Mobile service available'],['Local & Independent','Benton Harbor, MI']];
     cn.forEach((e,i) => { if(covData[i]) e.textContent=covData[i][0]; });
     cd.forEach((e,i) => { if(covData[i]) e.textContent=covData[i][1]; });
     tx('.float-card-1 .text-sm', es?'Ahorro Promedio':'Avg. Savings');
