@@ -50,7 +50,7 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 10001;
   padding: 20px 0;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -1488,8 +1488,6 @@ body {
   cursor: pointer;
   padding: 8px;
   margin-left: 4px;
-  position: relative;
-  z-index: 10000;
 }
 /* Hide on desktop, show on mobile */
 @media (min-width: 641px) { .hamburger { display: none; } }
@@ -2284,6 +2282,15 @@ document.querySelectorAll('.service-card, .why-feature, .testimonial-card, .cont
       if (btn) btn.classList.remove('open');
       document.body.style.overflow = '';
     });
+  });
+  // Close mobile nav when tapping outside (on the overlay backdrop)
+  document.querySelector('.nav-links').addEventListener('click', function(e) {
+    if (e.target === this) {
+      this.classList.remove('mobile-open');
+      const btn = document.getElementById('hamburger');
+      if (btn) btn.classList.remove('open');
+      document.body.style.overflow = '';
+    }
   });
 
   // Apply saved language on page load
