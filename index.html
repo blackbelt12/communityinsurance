@@ -1336,7 +1336,7 @@ body {
     padding: 92px 24px 40px;
     flex-direction: column;
     gap: 4px;
-    z-index: 999;
+    z-index: 9999;
     /* Hidden by default — no transform, just invisible */
     display: flex !important;
     visibility: hidden;
@@ -1488,6 +1488,8 @@ body {
   cursor: pointer;
   padding: 8px;
   margin-left: 4px;
+  position: relative;
+  z-index: 10000;
 }
 /* Hide on desktop, show on mobile */
 @media (min-width: 641px) { .hamburger { display: none; } }
