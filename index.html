@@ -1393,6 +1393,22 @@ body {
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
   .footer h4 { margin-bottom: 12px; }
 
+  /* ── Navbar logo ── */
+  .nav-logo { font-size: 1.3rem; }
+
+  /* ── Service cards: horizontal layout ── */
+  .service-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 18px 16px;
+  }
+  .service-icon { width: 44px; height: 44px; border-radius: 12px; font-size: 18px; margin-bottom: 0; flex-shrink: 0; }
+  .service-card h3 { font-size: 1rem; margin-bottom: 6px; }
+  .service-card p { font-size: 0.85rem; line-height: 1.5; margin-bottom: 10px; }
+  .service-link { font-size: 0.82rem; }
+
   /* ── Lang toggle ── */
   .lang-toggle { padding: 7px 10px; font-size: 0.78rem; gap: 4px; }
 }
@@ -1462,7 +1478,7 @@ body {
 <!-- ===== NAVBAR ===== -->
 <nav class="navbar" id="navbar">
   <div class="nav-container">
-    <a href="#" class="nav-logo">
+    <a href="#home" class="nav-logo">
       <span class="nav-logo-bold">Community</span><span class="nav-logo-thin">&nbsp;Insurance</span>
     </a>
     <div class="nav-right">
